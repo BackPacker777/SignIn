@@ -1,0 +1,50 @@
+<% include ./head %>
+<body>
+	<!--<img src='images/NSPLogo.png' alt='NSP Logo' id='nspLogo'>-->
+
+	<div class="row" id="masthead">
+		<div class="small-2 columns">
+			<h3>Sign-In</h3>
+		</div>
+        <div class="small-2 columns">
+            <h3 id="when"></h3>
+        </div>
+		<div class="small-6 columns">
+			<h3 id="date"></h3>
+		</div>
+	</div>
+	<div class="row">
+        <br>
+        <form id="rosterForm">
+            <fieldset id="team1">
+                <legend>Team 1:</legend>
+                <div class="row fullWidth" id="row.1.1">
+                    <div class="small-2 columns" id="patroller.1.1">
+                        <input type="number" maxlength="5" id="patrollerID.1.1" required="1" placeholder="ID Number" />
+                    </div>
+                    <div class="small-2 columns">
+                        <h2 id="name.1.1"></h2>
+                    </div>
+                    <div class="small-1 columns" id="radioDiv.1.1">
+                        <input type="number" maxlength="2" required="1" id="radioNum.1.1" placeholder="Radio" />
+                    </div>
+
+                    <div class="small-1 column" id="rating.1.1"></div>
+                    <div class="small-1 column" id="time.1.1"></div>
+                    <div class="small-1 column" id="shift.1.1"></div>
+                    <label for="days.1.1" class="label left inline radius">Days:</label><div class="small-2 column" id="days.1.1"></div>
+                    <div class="small-2 columns" id="guestDiv.1.1">
+                        <input type="text" id="guest.1.1" placeholder="Guest" />
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+	</div>
+
+
+
+
+	<!-- SCRIPTS -->
+	<script src="/javascripts/bundle.js"></script>
+</body>
+<% include ./end %>
