@@ -71,90 +71,147 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var main = function () {
-	    function main(counter) {
-	        _classCallCheck(this, main);
+	     function main(counter) {
+	          _classCallCheck(this, main);
 
-	        main.date = new Date();
-	        //document.getElementById("studentZip").addEventListener("change", function() {main.loadZipData("student")}, false); //http://stackoverflow.com/questions/2373995/javascript-addeventlistener-event-fires-on-page-load
-	        document.getElementById("date").innerText = main.setDate();
-	        document.getElementById("when").innerText = main.setWhen();
-	        main.counter = counter;
-	        main.fade("in", "masthead");
-	        //main.fade("in", "NSPLogo");
-	        //document.getElementById("ell").addEventListener("click", main.fadeEllHelp);
-	        /*document.getElementById("addSibling").addEventListener("click", function() {
-	            main.counter++;
-	            main.fadeSibling(main.counter);
-	        });*/
-	    }
+	          main.counter1 = counter;
+	          main.counter2 = counter;
+	          main.counter3 = counter;
+	          main.counter4 = counter;
+	          main.date = new Date();
+	          document.getElementById("date").innerText = main.setDate();
+	          document.getElementById("when").innerText = main.setWhen();
+	          main.fade("in", "masthead");
+	          new _LoadDataClass2.default("../data/PatrolRoster.csv", function (finalData) {
+	               document.getElementById("patrollerID.1." + main.counter1).addEventListener("change", function () {
+	                    var patrollerDiv = "patrollerID.1." + main.counter1;
+	                    main.loadPatroller(main.counter1, finalData, patrollerDiv, 1);
+	                    main.determineShift(main.counter1, 1);
+	                    main.addRow(main.counter1, 1);
+	               }, false);
+	               document.getElementById("patrollerID.2." + main.counter2).addEventListener("change", function () {
+	                    var patrollerDiv = "patrollerID.2." + main.counter2;
+	                    main.loadPatroller(main.counter2, finalData, patrollerDiv, 2);
+	                    main.determineShift(main.counter2, patrollerDiv, 2);
+	                    main.addRow(main.counter1, patrollerDiv, 1);
+	               }, false);
+	               document.getElementById("patrollerID.3." + main.counter3).addEventListener("change", function () {
+	                    var patrollerDiv = "patrollerID.3." + main.counter3;
+	                    main.loadPatroller(main.counter3, finalData, patrollerDiv, 3);
+	                    main.determineShift(main.counter3, patrollerDiv, 3);
+	                    main.addRow(main.counter1, patrollerDiv, 1);
+	               }, false);
+	               document.getElementById("patrollerID.4." + main.counter4).addEventListener("change", function () {
+	                    var patrollerDiv = "patrollerID.4." + main.counter4;
+	                    main.loadPatroller(main.counter4, finalData, patrollerDiv, 4);
+	                    main.determineShift(main.counter4, patrollerDiv, 4);
+	                    main.addRow(main.counter1, patrollerDiv, 1);
+	               }, false);
+	          });
+	          //main.fade("in", "NSPLogo");
+	     }
 
-	    _createClass(main, null, [{
-	        key: 'setDate',
-	        value: function setDate() {
-	            var month = main.date.getMonth() + 1;
-	            var day = main.date.getDate();
-	            var year = main.date.getFullYear();
-	            var weekDay = main.date.getDay();
-	            var hour = main.date.getHours();
-	            var minute = main.date.getMinutes();
-	            if (weekDay == 0) {
-	                weekDay = "Sunday";
-	            } else if (weekDay == 1) {
-	                weekDay = "Monday";
-	            } else if (weekDay == 2) {
-	                weekDay = "Tuesday";
-	            } else if (weekDay == 3) {
-	                weekDay = "Wednesday";
-	            } else if (weekDay == 4) {
-	                weekDay = "Thursday";
-	            } else if (weekDay == 5) {
-	                weekDay = "Friday";
-	            } else {
-	                weekDay = "Saturday";
-	            }
-	            return weekDay + "\t" + month + "/" + day + "/" + year + "\t" + hour + ":" + minute;
-	        }
-	    }, {
-	        key: 'setWhen',
-	        value: function setWhen() {
-	            var MAX_DAY_TIME = 12;
-	            if (main.date.getHours() > 0 && main.date.getHours() < MAX_DAY_TIME) {
-	                return "Day Shift";
-	            } else {
-	                return "Night Shift";
-	            }
-	        }
-	    }, {
-	        key: 'loadPatrollerData',
-	        value: function loadPatrollerData(whichPerson) {
-	            new _LoadDataClass2.default().loadData("../data/patrollerDatabase.csv", function (finalData) {
-	                var zip = document.getElementById(whichPerson + "Zip").value;
-	                for (var i = 0; i < finalData.length; i++) {
-	                    if (zip == finalData[i][0]) {
-	                        document.getElementById(whichPerson + "City").value = finalData[i][1];
-	                        document.getElementById(whichPerson + "State").value = finalData[i][2];
+	     _createClass(main, null, [{
+	          key: 'setDate',
+	          value: function setDate() {
+	               var month = main.date.getMonth() + 1;
+	               var day = main.date.getDate();
+	               var year = main.date.getFullYear();
+	               var weekDay = main.date.getDay();
+	               var hour = main.date.getHours();
+	               var minute = main.date.getMinutes();
+	               if (minute < 10) {
+	                    minute = "0" + minute;
+	               }
+	               if (weekDay == 0) {
+	                    weekDay = "Sunday";
+	               } else if (weekDay == 1) {
+	                    weekDay = "Monday";
+	               } else if (weekDay == 2) {
+	                    weekDay = "Tuesday";
+	               } else if (weekDay == 3) {
+	                    weekDay = "Wednesday";
+	               } else if (weekDay == 4) {
+	                    weekDay = "Thursday";
+	               } else if (weekDay == 5) {
+	                    weekDay = "Friday";
+	               } else {
+	                    weekDay = "Saturday";
+	               }
+	               return weekDay + "\t" + month + "/" + day + "/" + year + "\t ~ " + hour + ":" + minute;
+	          }
+	     }, {
+	          key: 'setWhen',
+	          value: function setWhen() {
+	               var MAX_DAY_TIME = 11;
+	               var MAX_AFTERNOON_TIME = 13;
+	               if (main.date.getHours() > 0 && main.date.getHours() < MAX_DAY_TIME) {
+	                    //return "Day Shift";
+	                    return "Day";
+	               } else if (main.date.getHours() >= MAX_DAY_TIME && main.date.getHours() <= MAX_AFTERNOON_TIME) {
+	                    //return "Day Shift - Afternoon";
+	                    return "Afternoon";
+	               } else {
+	                    //return "Night Shift";
+	                    return "Meow - 3";
+	               }
+	          }
+	     }, {
+	          key: 'loadPatroller',
+	          value: function loadPatroller(counter, finalData, whichPatroller, whichName) {
+	               var patrollerID = document.getElementById(whichPatroller).value;
+	               for (var i = 0; i < finalData.length; i++) {
+	                    if (patrollerID == finalData[i][0]) {
+	                         document.getElementById("name." + whichName + "." + counter).innerText = finalData[i][2] + " " + finalData[i][1];
+	                         var days = Number(finalData[i][3]) + 1;
+	                         document.getElementById("days." + whichName + "." + counter).innerText = " " + days;
 	                    }
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'fade',
-	        value: function fade(direction, fadeWhat) {
-	            new _FadeStuffClass2.default(direction, fadeWhat).doFade();
-	        }
-	    }, {
-	        key: 'fadeSibling',
-	        value: function fadeSibling(counter) {
-	            new _AddDivClass2.default("sibling").addDiv(counter);
-	            main.fade("in", "sibRow" + counter);
-	        }
-	    }]);
+	               }
+	          }
+	     }, {
+	          key: 'determineShift',
+	          value: function determineShift(counter, whichShift) {
+	               var shift = "shift." + whichShift + "." + counter;
+	               var guest = "guest." + whichShift + "." + counter;
+	               var days = "days." + whichShift + "." + counter;
+	               document.getElementById(shift).addEventListener("change", function () {
+	                    if (document.getElementById("am").checked) {
+	                         main.fade("out", guest);
+	                         main.recountDays("half", Number(document.getElementById(days).innerText), document.getElementById(days));
+	                    } else {
+	                         main.fade("in", guest);
+	                         main.recountDays("full", Number(document.getElementById(days).innerText), document.getElementById(days));
+	                    }
+	               });
+	          }
+	     }, {
+	          key: 'addRow',
+	          value: function addRow(counter, whichRow) {
+	               console.log(counter);
+	          }
+	     }, {
+	          key: 'fade',
+	          value: function fade(direction, fadeWhat) {
+	               new _FadeStuffClass2.default(direction, fadeWhat).doFade();
+	          }
+	     }, {
+	          key: 'recountDays',
+	          value: function recountDays(amount, value, recountWhat) {
+	               if (amount == "half") {
+	                    value = value - .5;
+	                    recountWhat.innerText = value;
+	               } else {
+	                    value = value + .5;
+	                    recountWhat.innerText = value;
+	               }
+	          }
+	     }]);
 
-	    return main;
+	     return main;
 	}();
 
 	window.onload = function () {
-	    new main(0);
+	     new main(1);
 	};
 
 /***/ },
@@ -169,46 +226,50 @@
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	     value: true
 	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var LoadDataClass = function () {
-	    function LoadDataClass() {
-	        _classCallCheck(this, LoadDataClass);
-	    }
+	var LoadDataClass = function LoadDataClass(filePath, callback) {
+	     _classCallCheck(this, LoadDataClass);
 
-	    _createClass(LoadDataClass, [{
-	        key: "loadData",
-	        value: function loadData(filePath, callback) {
-	            var request = new XMLHttpRequest();
-	            request.open("GET", filePath, true);
-	            request.send();
-	            request.onload = function () {
-	                var COLUMNS = 3;
-	                var data = undefined,
-	                    middleData = undefined,
-	                    finalData = [];
-	                if (request.readyState === 4 && request.status === 200) {
-	                    data = request.responseText.split(/\n/);
-	                }
-	                for (var i = 0; i < data.length; i++) {
-	                    middleData = data[i].split(/,/);
-	                    finalData[i] = []; //makes it an MD array
-	                    for (var j = 0; j < COLUMNS; j++) {
-	                        finalData[i][j] = middleData[j];
-	                    }
-	                }
-	                callback(finalData);
-	            };
-	        }
-	    }]);
+	     var request = new XMLHttpRequest();
+	     request.open("GET", filePath, true);
+	     request.send();
+	     request.onload = function () {
+	          var COLUMNS = 4;
+	          var data = undefined,
+	              middleData = undefined,
+	              finalData = [];
+	          if (request.readyState === 4 && request.status === 200) {
+	               data = request.responseText.split(/\n/);
+	          }
+	          for (var i = 0; i < data.length; i++) {
+	               middleData = data[i].split(/,/);
+	               finalData[i] = []; //makes it an MD array
+	               for (var j = 0; j < COLUMNS; j++) {
+	                    finalData[i][j] = middleData[j];
+	               }
+	          }
+	          callback(finalData);
+	     };
+	}
 
-	    return LoadDataClass;
-	}();
+	/*     getPatroller(id) {
+	          let lastName, firstName, days;
+	          for (let i = 0; i < LoadDataClass.finalData.length; i++) {
+	               if (LoadDataClass.finalData[i][0] == id) {
+	                    lastName = LoadDataClass.finalData[i][1];
+	                    firstName = LoadDataClass.finalData[i][2];
+	                    days = LoadDataClass.finalData[i][3];
+	                    break;
+	               }
+	          }
+	          console.log(lastName);
+	          return {lastName: lastName, firstName: firstName, days: days};
+	     }*/
+	;
 
 	exports.default = LoadDataClass;
 
