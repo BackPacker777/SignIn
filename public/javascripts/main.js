@@ -2,6 +2,7 @@
  *   VERSION: 1.00
  *   CREATED: 2/25/2016
  *   PURPOSE: Sign-In!
+ *   TODO: Remove patroller from array after sign in; Add up to three (3) rows per team as sign ins occur
  */
 
 "use strict";
@@ -17,7 +18,8 @@ class main {
           main.counter3 = counter;
           main.counter4 = counter;
           main.date = new Date();
-          document.getElementById("date").innerText = main.setDate();
+          main.setDate();
+          main.refreshTime();
           document.getElementById("when").innerText = main.setWhen();
           main.fade("in", "masthead");
           new LoadDataClass("../data/PatrolRoster.csv", function(finalData) {
@@ -30,20 +32,20 @@ class main {
                document.getElementById("patrollerID.2." + main.counter2).addEventListener("change", function() {
                     let patrollerDiv = "patrollerID.2." + main.counter2;
                     main.loadPatroller(main.counter2, finalData, patrollerDiv, 2);
-                    main.determineShift(main.counter2, patrollerDiv, 2);
-                    main.addRow(main.counter1, patrollerDiv, 1);
+                    main.determineShift(main.counter2, 2);
+                    main.addRow(main.counter1, 2);
                }, false);
                document.getElementById("patrollerID.3." + main.counter3).addEventListener("change", function() {
                     let patrollerDiv = "patrollerID.3." + main.counter3;
                     main.loadPatroller(main.counter3, finalData, patrollerDiv, 3);
-                    main.determineShift(main.counter3, patrollerDiv, 3);
-                    main.addRow(main.counter1, patrollerDiv, 1);
+                    main.determineShift(main.counter3, 3);
+                    main.addRow(main.counter1, 3);
                }, false);
                document.getElementById("patrollerID.4." + main.counter4).addEventListener("change", function() {
                     let patrollerDiv = "patrollerID.4." + main.counter4;
                     main.loadPatroller(main.counter4, finalData, patrollerDiv, 4);
-                    main.determineShift(main.counter4, patrollerDiv, 4);
-                    main.addRow(main.counter1, patrollerDiv, 1);
+                    main.determineShift(main.counter4, 4);
+                    main.addRow(main.counter1, 3);
                }, false);
           });
           //main.fade("in", "NSPLogo");
@@ -74,7 +76,11 @@ class main {
           } else {
                weekDay = "Saturday";
           }
-          return weekDay + "\t" + month + "/" + day + "/" + year + "\t ~ " + hour + ":" + minute;
+          document.getElementById("date").innerText = weekDay + "\t" + month + "/" + day + "/" + year + "\t ~ " + hour + ":" + minute;
+     }
+
+     static refreshTime() {
+          window.setInterval(main.setDate(), 10000);
      }
 
      static setWhen() {
@@ -104,18 +110,31 @@ class main {
      }
 
      static determineShift(counter, whichShift) {
+          const DAY_START = 5;
+          const AFTERNOON_START = 11;
+          const NIGHT_START = 15;
           let shift = "shift." + whichShift + "." + counter;
-          let guest = "guest." + whichShift + "." + counter;
+          let guest = "guestDiv." + whichShift + "." + counter;
           let days = "days." + whichShift + "." + counter;
-          document.getElementById(shift).addEventListener("change", function() {
-               if (document.getElementById("am").checked) {
-                    main.fade("out", guest);
-                    main.recountDays("half", Number(document.getElementById(days).innerText), document.getElementById(days));
-               } else {
-                    main.fade("in", guest);
-                    main.recountDays("full", Number(document.getElementById(days).innerText), document.getElementById(days));
-               }
-          });
+          //let hour = main.date.getHours();
+          let hour = 16;
+          if (hour > DAY_START && hour < AFTERNOON_START) {
+               main.fade("in", shift);
+               main.fade("in", guest);
+               main.recountDays("half", Number(document.getElementById(days).innerText), document.getElementById(days));
+          } else if (hour > NIGHT_START) {
+               main.fade("in", guest);
+          } else {
+               document.getElementById(shift).addEventListener("change", function() {
+                    if (document.getElementById("am").checked) {
+                         main.fade("out", guest);
+                         main.recountDays("half", Number(document.getElementById(days).innerText), document.getElementById(days));
+                    } else {
+                         main.fade("in", guest);
+                         main.recountDays("full", Number(document.getElementById(days).innerText), document.getElementById(days));
+                    }
+               });
+          }
      }
 
      static addRow(counter, whichRow) {
@@ -138,5 +157,5 @@ class main {
 }
 
 window.onload = function() {
-    new main(1);
+     new main(1);
 };
