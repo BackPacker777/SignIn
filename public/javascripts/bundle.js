@@ -48,7 +48,7 @@
 	 *   VERSION: 1.00
 	 *   CREATED: 2/25/2016
 	 *   PURPOSE: Sign-In!
-	 *   TODO: Remove patroller from array after sign in; Add up to three (3) rows per team as sign ins occur
+	 *   TODO: Finalize leadership stuff; Finalize overflow stuff; Finish shift finalization
 	 */
 
 	"use strict";
@@ -72,50 +72,28 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var main = function () {
-	     function main(counter) {
+	     function main(counter, finalData) {
 	          _classCallCheck(this, main);
 
-	          main.counter1 = counter;
-	          main.counter2 = counter;
-	          main.counter3 = counter;
-	          main.counter4 = counter;
-	          main.date = new Date();
+	          main.patrollerData = finalData;
+	          main.shiftPatrollers = [[]];
+	          main.numPatrollers = 0;
+	          main.raceTimes = ["7:00", "7:15", "7:30", "7:45", "8:00", "8:15", "8:30", "8:45"];
+	          main.leaders = ["178647", "251542", "178651", "128105", "226122", "223304", "128072", "192354"];
 	          main.setDate();
-	          main.refreshTime();
 	          document.getElementById("when").innerText = main.setWhen();
 	          main.fade("in", "masthead");
-	          new _LoadDataClass2.default("../data/PatrolRoster.csv", function (finalData) {
-	               document.getElementById("patrollerID.1." + main.counter1).addEventListener("change", function () {
-	                    var patrollerDiv = "patrollerID.1." + main.counter1;
-	                    main.loadPatroller(main.counter1, finalData, patrollerDiv, 1);
-	                    main.determineShift(main.counter1, 1);
-	                    main.addRow(main.counter1, 1);
-	               }, false);
-	               document.getElementById("patrollerID.2." + main.counter2).addEventListener("change", function () {
-	                    var patrollerDiv = "patrollerID.2." + main.counter2;
-	                    main.loadPatroller(main.counter2, finalData, patrollerDiv, 2);
-	                    main.determineShift(main.counter2, 2);
-	                    main.addRow(main.counter1, 2);
-	               }, false);
-	               document.getElementById("patrollerID.3." + main.counter3).addEventListener("change", function () {
-	                    var patrollerDiv = "patrollerID.3." + main.counter3;
-	                    main.loadPatroller(main.counter3, finalData, patrollerDiv, 3);
-	                    main.determineShift(main.counter3, 3);
-	                    main.addRow(main.counter1, 3);
-	               }, false);
-	               document.getElementById("patrollerID.4." + main.counter4).addEventListener("change", function () {
-	                    var patrollerDiv = "patrollerID.4." + main.counter4;
-	                    main.loadPatroller(main.counter4, finalData, patrollerDiv, 4);
-	                    main.determineShift(main.counter4, 4);
-	                    main.addRow(main.counter1, 3);
-	               }, false);
-	          });
+	          for (var i = 1; i <= 4; i++) {
+	               main.handlePatroller("patrollerID." + i + "." + counter, i, counter);
+	          }
+	          main.handleFinalize();
 	          //main.fade("in", "NSPLogo");
 	     }
 
 	     _createClass(main, null, [{
 	          key: 'setDate',
 	          value: function setDate() {
+	               main.date = new Date();
 	               var month = main.date.getMonth() + 1;
 	               var day = main.date.getDate();
 	               var year = main.date.getFullYear();
@@ -141,11 +119,7 @@
 	                    weekDay = "Saturday";
 	               }
 	               document.getElementById("date").innerText = weekDay + "\t" + month + "/" + day + "/" + year + "\t ~ " + hour + ":" + minute;
-	          }
-	     }, {
-	          key: 'refreshTime',
-	          value: function refreshTime() {
-	               window.setInterval(main.setDate(), 10000);
+	               return setTimeout(main.setDate, 10000);
 	          }
 	     }, {
 	          key: 'setWhen',
@@ -164,50 +138,91 @@
 	               }
 	          }
 	     }, {
-	          key: 'loadPatroller',
-	          value: function loadPatroller(counter, finalData, whichPatroller, whichName) {
-	               var patrollerID = document.getElementById(whichPatroller).value;
-	               for (var i = 0; i < finalData.length; i++) {
-	                    if (patrollerID == finalData[i][0]) {
-	                         document.getElementById("name." + whichName + "." + counter).innerText = finalData[i][2] + " " + finalData[i][1];
-	                         var days = Number(finalData[i][3]) + 1;
-	                         document.getElementById("days." + whichName + "." + counter).innerText = " " + days;
+	          key: 'handlePatroller',
+	          value: function handlePatroller(patrollerDiv, teamNum, counter) {
+	               var MAX_COUNTER = 4;
+	               document.getElementById(patrollerDiv).addEventListener("change", function () {
+	                    var patrollerID = document.getElementById(patrollerDiv).value;
+	                    var daysDiv = "daysDiv." + teamNum + "." + counter;
+	                    var radioDiv = "radioDiv." + teamNum + "." + counter;
+	                    var name = "name." + teamNum + "." + counter;
+	                    var days = "days." + teamNum + "." + counter;
+	                    var found = false;
+	                    for (var i = 0; i < main.patrollerData.length; i++) {
+	                         var COLUMNS = 4;
+	                         if (patrollerID == main.patrollerData[i][0]) {
+	                              found = true;
+	                              main.fade("out", patrollerDiv);
+	                              main.fade("in", daysDiv);
+	                              main.fade("in", radioDiv);
+	                              document.getElementById(name).innerText = main.patrollerData[i][2] + " " + main.patrollerData[i][1];
+	                              var daysNum = Number(main.patrollerData[i][3]) + 1;
+	                              document.getElementById(days).innerText = " " + daysNum;
+	                              main.determineShift(counter, teamNum);
+	                              counter++;
+	                              for (var j = 0; j < COLUMNS; j++) {
+	                                   main.shiftPatrollers[main.numPatrollers][j] = main.patrollerData[i][j];
+	                              }
+	                              main.patrollerData[i].splice(0, MAX_COUNTER); //remove patroller from array if found.
+	                              if (counter <= MAX_COUNTER) {
+	                                   main.addRow(counter, teamNum);
+	                                   patrollerDiv = "patrollerID." + teamNum + "." + counter;
+	                                   return main.handlePatroller(patrollerDiv, teamNum, counter);
+	                              }
+	                              main.numPatrollers++;
+	                         }
 	                    }
-	               }
+	                    if (!found) {
+	                         alert(patrollerID + " Already signed in or this is an invalid patroller ID number.");
+	                         document.getElementById(patrollerDiv).value = null;
+	                    }
+	               }, false);
 	          }
 	     }, {
 	          key: 'determineShift',
 	          value: function determineShift(counter, whichShift) {
-	               var DAY_START = 5;
+	               var DAY_START = 1;
 	               var AFTERNOON_START = 11;
 	               var NIGHT_START = 15;
 	               var shift = "shift." + whichShift + "." + counter;
 	               var guest = "guestDiv." + whichShift + "." + counter;
 	               var days = "days." + whichShift + "." + counter;
+	               var am = "am." + whichShift + "." + counter;
+	               var row = "row." + whichShift + "." + counter;
 	               //let hour = main.date.getHours();
 	               var hour = 16;
 	               if (hour > DAY_START && hour < AFTERNOON_START) {
 	                    main.fade("in", shift);
 	                    main.fade("in", guest);
-	                    main.recountDays("half", Number(document.getElementById(days).innerText), document.getElementById(days));
-	               } else if (hour > NIGHT_START) {
-	                    main.fade("in", guest);
-	               } else {
-	                    document.getElementById(shift).addEventListener("change", function () {
-	                         if (document.getElementById("am").checked) {
+	                    document.getElementById(am).addEventListener("change", function () {
+	                         if (document.getElementById(am).checked) {
 	                              main.fade("out", guest);
 	                              main.recountDays("half", Number(document.getElementById(days).innerText), document.getElementById(days));
+	                              document.getElementById(row).style.backgroundColor = "yellow";
 	                         } else {
 	                              main.fade("in", guest);
 	                              main.recountDays("full", Number(document.getElementById(days).innerText), document.getElementById(days));
+	                              document.getElementById(row).style.backgroundColor = "white";
 	                         }
 	                    });
+	               } else if (hour >= AFTERNOON_START && hour <= NIGHT_START) {
+	                    main.fade("out", guest);
+	                    main.fade("out", shift);
+	                    main.recountDays("half", Number(document.getElementById(days).innerText), document.getElementById(days));
+	               } else {
+	                    main.fade("in", guest);
+	                    main.populateRaceCourse(whichShift, counter);
 	               }
 	          }
 	     }, {
 	          key: 'addRow',
 	          value: function addRow(counter, whichRow) {
-	               console.log(counter);
+	               var team = "team" + whichRow;
+	               var row = document.createElement("div");
+	               row.setAttribute('class', 'row fullWidth');
+	               row.setAttribute('id', 'row.' + whichRow + '.' + counter);
+	               row.innerHTML = '<div class="small-2 columns" id="patroller.' + whichRow + '.' + counter + '">' + '<input type="number" maxlength="5" id="patrollerID.' + whichRow + '.' + counter + '" placeholder="ID Number">' + '</div>' + '<div class="small-3 columns">' + '<h5 class="y-center" id="name.' + whichRow + '.' + counter + '"></h5>' + '</div>' + '<div class="small-1 columns noDisp" id="radioDiv.' + whichRow + '.' + counter + '">' + '<input type="number" maxlength="2" required="1" id="radioNum.' + whichRow + '.' + counter + '" placeholder="Radio" />' + '</div>' + '<div class="small-2 column noDisp" id="shift.' + whichRow + '.' + counter + '">' + '<h5 class="y-center float-left">AM Only:</h5> <input type="checkbox" class="y-center-2 float-center" id="am.' + whichRow + '.' + counter + '">' + '</div>' + '<div class="small-2 columns noDisp" id="daysDiv.' + whichRow + '.' + counter + '">' + '<h5 class="y-center float-left">Days: </h5><h5 class="small-1 columns y-center end" id="days.' + whichRow + '.' + counter + '"></h5>' + '</div>' + '<div class="small-2 columns noDisp end" id="guestDiv.' + whichRow + '.' + counter + '">' + '<input type="text" id="guest.' + whichRow + '.' + counter + '" placeholder="Guest">' + '</div>' + '<div class="small-2 columns noDisp end" id="raceDiv.' + whichRow + '.' + counter + '">' + '<h5 class="y-center float-left">Course Time: </h5> <h5 class="small-1 columns y-center end" id="race.' + whichRow + '.' + counter + '"></h5>' + '</div>';
+	               document.getElementById(team).appendChild(row);
 	          }
 	     }, {
 	          key: 'fade',
@@ -225,13 +240,44 @@
 	                    recountWhat.innerText = value;
 	               }
 	          }
+	     }, {
+	          key: 'populateRaceCourse',
+	          value: function populateRaceCourse(whichShift, counter) {
+	               var raceDiv = "raceDiv." + whichShift + "." + counter;
+	               var raceSpan = "race." + whichShift + "." + counter;
+	               if (main.raceTimes[0]) {
+	                    main.fade("in", raceDiv);
+	                    document.getElementById(raceSpan).innerText = main.raceTimes.shift();
+	                    document.getElementById(raceDiv).style.backgroundColor = "yellow";
+	               }
+	          }
+	     }, {
+	          key: 'handleFinalize',
+	          value: function handleFinalize() {
+	               document.getElementById("finalize").addEventListener("click", function () {
+	                    var leader = prompt("Please enter your NSP ID: ");
+	                    var correctLeader = false;
+	                    for (var i = 0; i < main.leaders.length; i++) {
+	                         if (leader == main.leaders[i]) {
+	                              correctLeader = 1;
+	                              console.log("Finalizing...");
+	                         }
+	                    }
+	                    if (!correctLeader) {
+	                         alert("Invalid account to finalize shift.");
+	                    }
+	               }, false);
+	          }
 	     }]);
 
 	     return main;
 	}();
 
 	window.onload = function () {
-	     new main(1);
+	     new _LoadDataClass2.default("../data/PatrolRoster.csv", function (finalData) {
+	          var STARTING_COUNT = 1;
+	          new main(STARTING_COUNT, finalData);
+	     });
 	};
 
 /***/ },

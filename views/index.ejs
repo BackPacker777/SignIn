@@ -14,125 +14,180 @@
 			<h3 id="date"></h3>
 		</div>
 	</div>
-	<div class="row">
+	<form id="rosterForm">
+	<!--<form id="rosterForm" action="/results" method="post">-->
 		<br>
-		<form id="rosterForm">
-			<fieldset id="team1">
-				<legend class="label">Group 1:</legend>
-				<div class="row fullWidth" id="row.1.1">
-					<div class="small-2 columns" id="patroller.1.1">
-						<input type="number" maxlength="5" id="patrollerID.1.1" required="1" placeholder="ID Number" />
-					</div>
-					<div class="small-3 columns">
-						<h5 class="y-center" id="name.1.1"></h5>
-					</div>
-					<div class="small-1 columns" id="radioDiv.1.1">
-						<!--<input type="number" maxlength="2" required="1" id="radioNum.1.1" placeholder="Radio" />-->
-						<input type="number" maxlength="2" required="1" id="radioNum.1.1" placeholder="Group" />
-					</div>
-					<div class="small-2 column noDisp" id="shift.1.1">
-						<h5 class="y-center float-left">AM Only:</h5> <input type="checkbox" class="y-center-2 float-center" id="am.1.1">
-					</div>
-					<div class="small-2 columns">
-						<h5 class="y-center float-left">Days: </h5><h5 class="small-1 columns y-center end" id="days.1.1"></h5>
-					</div>
-					<div class="small-2 columns noDisp" id="guestDiv.1.1">
-						<input type="text" id="guest.1.1" placeholder="Guest" />
-					</div>
+		<fieldset id="team1">
+			<legend class="label">Team 1:</legend>
+			<div class="row fullWidth" id="row.1.1">
+				<div class="small-2 columns" id="patroller.1.1">
+					<input type="number" maxlength="6" id="patrollerID.1.1" placeholder="ID Number">
 				</div>
-			</fieldset>
-		</form>
-	</div>
-	<br>
-	<div class="row">
+				<div class="small-3 columns">
+					<h5 class="y-center" id="name.1.1"></h5>
+				</div>
+				<div class="small-1 columns noDisp" id="radioDiv.1.1">
+					<input type="number" maxlength="2" id="radioNum.1.1" placeholder="Radio">
+				</div>
+				<div class="small-2 column noDisp" id="shift.1.1">
+					<h5 class="y-center float-left">AM Only:</h5> <input type="checkbox" class="y-center-2 float-center" id="am.1.1">
+				</div>
+				<div class="small-2 columns noDisp" id="daysDiv.1.1">
+					<h5 class="y-center float-left">Days: </h5><h5 class="small-1 columns y-center end" id="days.1.1"></h5>
+				</div>
+				<div class="small-2 columns noDisp end" id="guestDiv.1.1">
+					<input type="text" id="guest.1.1" placeholder="Guest">
+				</div>
+				<div class="small-2 columns noDisp end" id="raceDiv.1.1">
+					<h5 class="y-center float-left">Course Time: </h5> <h5 class="small-1 columns y-center end" id="race.1.1"></h5>
+				</div>
+			</div>
+		</fieldset>
 		<br>
-		<form id="rosterForm">
-			<fieldset id="team1">
-				<legend class="label">Group 2:</legend>
-				<div class="row fullWidth" id="row.2.1">
-					<div class="small-2 columns" id="patroller.2.1">
-						<input type="number" maxlength="5" id="patrollerID.2.1" required="1" placeholder="ID Number" />
-					</div>
-					<div class="small-3 columns">
-						<h5 class="y-center" id="name.2.1"></h5>
-					</div>
-					<div class="small-1 columns" id="radioDiv.2.1">
-						<!--<input type="number" maxlength="2" required="1" id="radioNum.2.1" placeholder="Radio" />-->
-						<input type="number" maxlength="2" required="1" id="radioNum.2.1" placeholder="Group" />
-					</div>
-					<div class="small-2 column noDisp" id="shift.2.1">
-						<h5 class="y-center float-left">AM Only:</h5> <input type="checkbox" class="y-center-2 float-center noDisp" id="am.2.1">
-					</div>
-					<div class="small-2 columns">
-						<h5 class="y-center float-left">Days: </h5><h5 class="small-1 columns y-center end" id="days.2.1"></h5>
-					</div>
-					<div class="small-2 columns noDisp" id="guestDiv.2.1">
-						<input type="text" id="guest.2.1" placeholder="Guest" />
-					</div>
+		<fieldset id="team2">
+			<legend class="label">Team 2:</legend>
+			<div class="row fullWidth" id="row.2.1">
+				<div class="small-2 columns" id="patroller.2.1">
+					<input type="number" maxlength="6" id="patrollerID.2.1" placeholder="ID Number">
 				</div>
-			</fieldset>
-		</form>
-	</div>
-	<br>
-	<div class="row">
+				<div class="small-3 columns">
+					<h5 class="y-center" id="name.2.1"></h5>
+				</div>
+				<div class="small-1 columns noDisp" id="radioDiv.2.1">
+					<input type="number" maxlength="2" id="radioNum.2.1" placeholder="Radio">
+				</div>
+				<div class="small-2 column noDisp" id="shift.2.1">
+					<h5 class="y-center float-left">AM Only:</h5> <input type="checkbox" class="y-center-2 float-center" id="am.2.1">
+				</div>
+				<div class="small-2 columns noDisp" id="daysDiv.2.1">
+					<h5 class="y-center float-left">Days: </h5><h5 class="small-1 columns y-center end" id="days.2.1"></h5>
+				</div>
+				<div class="small-2 columns noDisp end" id="guestDiv.2.1">
+					<input type="text" id="guest.2.1" placeholder="Guest">
+				</div>
+				<div class="small-2 columns noDisp end" id="raceDiv.2.1">
+					<h5 class="y-center float-left">Course Time: </h5> <h5 class="small-1 columns y-center end" id="race.2.1"></h5>
+				</div>
+			</div>
+		</fieldset>
 		<br>
-		<form id="rosterForm">
-			<fieldset id="team1">
-				<legend class="label">Group 3:</legend>
-				<div class="row fullWidth" id="row.3.1">
-					<div class="small-2 columns" id="patroller.3.1">
-						<input type="number" maxlength="5" id="patrollerID.3.1" required="1" placeholder="ID Number" />
-					</div>
-					<div class="small-3 columns">
-						<h5 class="y-center" id="name.3.1"></h5>
-					</div>
-					<div class="small-1 columns" id="radioDiv.3.1">
-						<!--<input type="number" maxlength="2" required="1" id="radioNum.3.1" placeholder="Radio" />-->
-						<input type="number" maxlength="2" required="1" id="radioNum.3.1" placeholder="Group" />
-					</div>
-					<div class="small-2 column noDisp" id="shift.3.1">
-						<h5 class="y-center float-left">AM Only:</h5> <input type="checkbox" class="y-center-2 float-center" id="am.2.1">
-					</div>
-					<div class="small-2 columns">
-						<h5 class="y-center float-left">Days: </h5><h5 class="small-1 columns y-center end" id="days.3.1"></h5>
-					</div>
-					<div class="small-2 columns noDisp" id="guestDiv.3.1">
-						<input type="text" id="guest.3.1" placeholder="Guest" />
-					</div>
+		<fieldset id="team3">
+			<legend class="label">Team 3:</legend>
+			<div class="row fullWidth" id="row.3.1">
+				<div class="small-2 columns" id="patroller.3.1">
+					<input type="number" maxlength="6" id="patrollerID.3.1" placeholder="ID Number">
 				</div>
-			</fieldset>
-		</form>
-	</div>
-	<br>
-	<div class="row">
+				<div class="small-3 columns">
+					<h5 class="y-center" id="name.3.1"></h5>
+				</div>
+				<div class="small-1 columns noDisp" id="radioDiv.3.1">
+					<input type="number" maxlength="2" id="radioNum.3.1" placeholder="Radio">
+				</div>
+				<div class="small-2 column noDisp" id="shift.3.1">
+					<h5 class="y-center float-left">AM Only:</h5> <input type="checkbox" class="y-center-2 float-center" id="am.3.1">
+				</div>
+				<div class="small-2 columns noDisp" id="daysDiv.3.1">
+					<h5 class="y-center float-left">Days: </h5><h5 class="small-1 columns y-center end" id="days.3.1"></h5>
+				</div>
+				<div class="small-2 columns noDisp end" id="guestDiv.3.1">
+					<input type="text" id="guest.3.1" placeholder="Guest">
+				</div>
+				<div class="small-2 columns noDisp end" id="raceDiv.3.1">
+					<h5 class="y-center float-left">Course Time: </h5> <h5 class="small-1 columns y-center end" id="race.3.1"></h5>
+				</div>
+			</div>
+		</fieldset>
 		<br>
-		<form id="rosterForm">
-			<fieldset id="team1">
-				<legend class="label">Group 4:</legend>
-				<div class="row fullWidth" id="row.4.1">
-					<div class="small-2 columns" id="patroller.4.1">
-						<input type="number" maxlength="5" id="patrollerID.4.1" required="1" placeholder="ID Number" />
-					</div>
-					<div class="small-3 columns">
-						<h5 class="y-center" id="name.4.1"></h5>
-					</div>
-					<div class="small-1 columns" id="radioDiv.4.1">
-						<!--<input type="number" maxlength="2" required="1" id="radioNum.4.1" placeholder="Radio" />-->
-						<input type="number" maxlength="2" required="1" id="radioNum.4.1" placeholder="Group" />
-					</div>
-					<div class="small-2 column noDisp" id="shift.4.1">
-						<h5 class="y-center float-left">AM Only:</h5> <input type="checkbox" class="y-center-2 float-center" id="am.3.1">
-					</div>
-					<div class="small-2 columns">
-						<h5 class="y-center float-left">Days: </h5><h5 class="small-1 columns y-center end" id="days.4.1"></h5>
-					</div>
-					<div class="small-2 columns noDisp" id="guestDiv.4.1">
-						<input type="text" id="guest.4.1" placeholder="Guest" />
-					</div>
+		<fieldset id="team4">
+			<legend class="label">Team 4:</legend>
+			<div class="row fullWidth" id="row.4.1">
+				<div class="small-2 columns" id="patroller.4.1">
+					<input type="number" maxlength="6" id="patrollerID.4.1" placeholder="ID Number">
 				</div>
-			</fieldset>
-		</form>
-	</div>
+				<div class="small-3 columns">
+					<h5 class="y-center" id="name.4.1"></h5>
+				</div>
+				<div class="small-1 columns noDisp" id="radioDiv.4.1">
+					<input type="number" maxlength="2" id="radioNum.4.1" placeholder="Group">
+				</div>
+				<div class="small-2 column noDisp" id="shift.4.1">
+					<h5 class="y-center float-left">AM Only:</h5> <input type="checkbox" class="y-center-2 float-center" id="am.4.1">
+				</div>
+				<div class="small-2 columns noDisp" id="daysDiv.4.1">
+					<h5 class="y-center float-left">Days: </h5><h5 class="small-1 columns y-center end" id="days.4.1"></h5>
+				</div>
+				<div class="small-2 columns noDisp end" id="guestDiv.4.1">
+					<input type="text" id="guest.4.1" placeholder="Guest">
+				</div>
+				<div class="small-2 columns noDisp end" id="raceDiv.4.1">
+					<h5 class="y-center float-left">Course Time: </h5> <h5 class="small-1 columns y-center end" id="race.4.1"></h5>
+				</div>
+			</div>
+		</fieldset>
+		<br>
+		<fieldset id="leadership">
+			<legend class="label">LEADERSHIP:</legend>
+			<div class="row fullWidth" id="row.5.1">
+				<div class="small-2 columns" id="patroller.5.1">
+					<input type="number" maxlength="6" id="patrollerID.5.1" placeholder="ID Number">
+				</div>
+				<div class="small-3 columns">
+					<h5 class="y-center" id="name.5.1"></h5>
+				</div>
+				<div class="small-1 columns noDisp" id="radioDiv.5.1">
+					<!--<input type="number" maxlength="2" id="radioNum.5.1" placeholder="Radio">-->
+					<input type="number" maxlength="2" id="radioNum.5.1" placeholder="Group">
+				</div>
+				<div class="small-2 column noDisp" id="shift.5.1">
+					<h5 class="y-center float-left">AM Only:</h5> <input type="checkbox" class="y-center-2 float-center" id="am.5.1">
+				</div>
+				<div class="small-2 columns noDisp" id="daysDiv.5.1">
+					<h5 class="y-center float-left">Days: </h5><h5 class="small-1 columns y-center end" id="days.5.1"></h5>
+				</div>
+				<div class="small-2 columns noDisp end" id="guestDiv.5.1">
+					<input type="text" id="guest.5.1" placeholder="Guest">
+				</div>
+				<div class="small-2 columns noDisp end" id="raceDiv.5.1">
+					<h5 class="y-center float-left">Course Time: </h5> <h5 class="small-1 columns y-center end" id="race.5.1"></h5>
+				</div>
+			</div>
+		</fieldset>
+		<fieldset class="noDisp" id="overflow">
+			<legend class="label">Overflow:</legend>
+			<div class="row fullWidth" id="row.6.1">
+				<div class="small-2 columns" id="patroller.6.1">
+					<input type="number" maxlength="6" id="patrollerID.6.1" placeholder="ID Number">
+				</div>
+				<div class="small-3 columns">
+					<h5 class="y-center" id="name.6.1"></h5>
+				</div>
+				<div class="small-1 columns noDisp" id="radioDiv.6.1">
+					<!--<input type="number" maxlength="2" id="radioNum.6.1" placeholder="Radio">-->
+					<input type="number" maxlength="2" id="radioNum.6.1" placeholder="Group">
+				</div>
+				<div class="small-2 column noDisp" id="shift.6.1">
+					<h5 class="y-center float-left">AM Only:</h5> <input type="checkbox" class="y-center-2 float-center" id="am.6.1">
+				</div>
+				<div class="small-2 columns noDisp" id="daysDiv.6.1">
+					<h5 class="y-center float-left">Days: </h5><h5 class="small-1 columns y-center end" id="days.6.1"></h5>
+				</div>
+				<div class="small-2 columns noDisp end" id="guestDiv.6.1">
+					<input type="text" id="guest.6.1" placeholder="Guest">
+				</div>
+				<div class="small-2 columns noDisp end" id="raceDiv.6.1">
+					<h5 class="y-center float-left">Course Time: </h5> <h5 class="small-1 columns y-center end" id="race.6.1"></h5>
+				</div>
+			</div>
+		</fieldset>
+		<br>
+		<br>
+		<div class="small-12 columns">
+			<input id='finalize' value='Finalize Shift' class="button large expanded success">
+		</div>
+		<div class="row">
+
+		</div>
+	</form>
 
 	<!-- SCRIPTS -->
 	<script src="/javascripts/bundle.js"></script>
